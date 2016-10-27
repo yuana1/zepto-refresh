@@ -5,7 +5,7 @@
  * @version: 1.2
  * @Github URL: https://github.com/yuana1/zepto-refresh
  */
- 
+
 ;(function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD模式
@@ -90,7 +90,7 @@
         // 加载更多回调
         loadingMoreCallback: function() {
 
-        }  
+        }
     };
 
     var viewHeight = $(window).height();
@@ -270,7 +270,7 @@
 
         // 当前处于首屏，设置distanceToRefresh坐标 && 向下滑动刷新
         if ( this.scrollTop <= this.opts.distanceToRefresh && this.opts.movePosition === 'down'  ) {
-            
+
             if(currentY >= this.opts.minDistanceToRefresh){
                 this.$pullToRefresh.addClass('preloader-refresh-flip');
                 this.isPullToRefresh = true;
@@ -278,16 +278,16 @@
                 this.$pullToRefresh.removeClass('preloader-refresh-flip');
                 this.isPullToRefresh = false;
             }
-            
-            this.$content[0].style[Util.prefixStyle('transform')] = 'translate(0,' + distance + 'px)' + Util.translateZ(); 
-            this.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0,' + distance + 'px)' + Util.translateZ(); 
+
+            this.$content[0].style[Util.prefixStyle('transform')] = 'translate(0,' + distance + 'px)' + Util.translateZ();
+            this.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0,' + distance + 'px)' + Util.translateZ();
             e.preventDefault();
             return;
         }
 
         // this.$pullToRefresh.hide();
         this.isPullToRefresh = false;
-        
+
     };
 
     /**
@@ -298,14 +298,14 @@
 
         /**
          * 回调执行完，回调
-         */   
+         */
         function complete() {
             that.$pullToRefresh.removeClass('preloader-refresh-loading');
             that.wrapHeight = that.$content.height();
             that.$content[0].style[Util.prefixStyle('transition')] = 'all .3s';
             that.$content[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
             that.$pullToRefresh[0].style[Util.prefixStyle('transition')] = 'all .3s';
-            that.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ(); 
+            that.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
 
             // 下拉加载到最后一页，异步刷新重新开始scroll事件
             if(that.finished){
@@ -341,7 +341,6 @@
 
         // 向下滑动距离最小阈值
         if (this.isPullToRefresh) {
-            //this.refreshHeight = this.$pullToRefresh.height();
             distance = this.refreshHeight = $('.preloader-refresh').height();
         }
 
@@ -349,7 +348,7 @@
         this.$content[0].style[Util.prefixStyle('transition')] = 'all .3s';
         this.$content[0].style[Util.prefixStyle('transform')] = 'translate(0, ' + distance + 'px)' + Util.translateZ();
         this.$pullToRefresh[0].style[Util.prefixStyle('transition')] = 'all .3s';
-        this.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0,' + distance + 'px)' + Util.translateZ(); 
+        this.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0,' + distance + 'px)' + Util.translateZ();
 
         // 回调
         if (this.isPullToRefresh) {
@@ -379,7 +378,7 @@
 
         /**
          * 回调执行完，回调
-         */   
+         */
         function complete(status) {
             if("finish" == status){
                 that.finished = true;
@@ -415,7 +414,7 @@
             new Refresh( $(this), options );
         })
     };
-    
-    // ADM 
+
+    // ADM
     return Refresh;
 }));
