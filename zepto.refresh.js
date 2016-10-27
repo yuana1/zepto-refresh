@@ -3,7 +3,7 @@
  * @Author: wangjun
  * @Update: 2015-12-30 12:00
  * @version: 1.2
- * @Github URL: https://github.com/nevergiveup-j/zepto-refresh
+ * @Github URL: https://github.com/yuana1/zepto-refresh
  */
  
 ;(function (factory) {
