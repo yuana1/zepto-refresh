@@ -341,7 +341,8 @@
 
         // 向下滑动距离最小阈值
         if (this.isPullToRefresh) {
-            distance = this.refreshHeight;
+            //this.refreshHeight = this.$pullToRefresh.height();
+            distance = this.refreshHeight = $('.preloader-refresh').height();
         }
 
         // 添加动画事件
