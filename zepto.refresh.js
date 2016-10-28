@@ -1,9 +1,9 @@
 /**
- * @Description: 下拉到底部和上拉到顶部再拉就出现刷新效果
- * @Author: wangjun
- * @Update: 2015-12-30 12:00
- * @version: 1.2
- * @Github URL: https://github.com/yuana1/zepto-refresh
+ * zepto-refresh - In the end to achieve the drop-down and pulled up to the top of the unit and then pull it appears refresh effect
+ * @version v1.0.2
+ * @link https://github.com/yuana1/zepto-refresh
+ * @originlink https://github.com/nevergiveup-j/zepto-refresh
+ * @license ISC
  */
 
 ;(function (factory) {
@@ -301,7 +301,7 @@
          */
         function complete() {
             that.$pullToRefresh.removeClass('preloader-refresh-loading');
-            that.wrapHeight = that.$content.height();
+            // that.wrapHeight = that.$content.height(); //高度不能在这里设置，由于angularjs执行玩complete之后dom并没有加载完毕，所以这个height是不对的。
             that.$content[0].style[Util.prefixStyle('transition')] = 'all .3s';
             that.$content[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
             that.$pullToRefresh[0].style[Util.prefixStyle('transition')] = 'all .3s';
@@ -387,9 +387,10 @@
             }
 
             that.isLoading = false;
-            that.wrapHeight = that.$content.height();
         }
 
+        //重新设置content高度 可能会引起性能问题
+        this.wrapHeight = this.$content.height();
         if ( this.wrapHeight <= viewTop + 10  && this.oldScrollTop < scrollTop && !this.isLoading && this.opts.isLoadingMore ) {
             // 如果存在最大时间限制, 切刷新时间未超出该时间，则不刷新
             var now = new Date().getTime();
