@@ -304,6 +304,7 @@
          */
         function complete() {
             that.$pullToRefresh.removeClass('preloader-refresh-loading');
+            that.oldScrollTop = 0; //
             // that.wrapHeight = that.$content.height(); //高度不能在这里设置，由于angularjs执行玩complete之后dom并没有加载完毕，所以这个height是不对的。
             that.$content[0].style[Util.prefixStyle('transition')] = 'all .3s';
             that.$content[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
