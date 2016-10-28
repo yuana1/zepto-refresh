@@ -8,16 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nevergiveup-j/zepto-refresh.git"
+    "url": "https://github.com/yuana1/zepto-refresh.git"
   },
-  "author": "",
+  "author": "zhaokaiyuan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nevergiveup-j/zepto-refresh/issues"
+    "url": "https://github.com/yuana1/zepto-refresh/issues"
   },
-  "homepage": "https://github.com/nevergiveup-j/zepto-refresh",
+  "homepage": "https://github.com/yuana1/zepto-refresh",
+  "forkurl": "https://github.com/nevergiveup-j/zepto-refresh",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-header": "^1.8.8",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0"
   }
