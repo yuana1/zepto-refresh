@@ -202,15 +202,18 @@
         // 未开启刷新不添加事件
         if(this.opts.isRefresh) {
             this.$wrap
+                .off('touchstart')
                 .on('touchstart', function(e) {
                     that.startX = e.touches[0].pageX;
                     that.startY = e.touches[0].pageY;
                 })
+                .off('touchmove')
                 .on('touchmove', function(e) {
                     that.scrollTop = $(this).scrollTop();
 
                     that.touchMove(e, $(this));
                 })
+                .off('touchend')
                 .on('touchend', function(e) {
                     that.touchEnd(e);
                 });
