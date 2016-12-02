@@ -253,8 +253,8 @@
         // 如果横向滚动大于纵向滚动. 取消触发事件
         if (Math.abs(currentX) > Math.abs(currentY)) {
             this.isPullToRefresh = false;
-            this.$content[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
-            this.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
+            // this.$content[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
+            // this.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
             return;
         }
 
@@ -299,6 +299,10 @@
     Refresh.prototype.touchEnd = function(e) {
         var that = this;
 
+        //当且进当下拉刷新的时候触发 content的transform
+        if(!( this.scrollTop <= this.opts.distanceToRefresh && this.opts.movePosition === 'down'  )){
+            return ;
+        }
         /**
          * 回调执行完，回调
          */
@@ -324,6 +328,7 @@
         function clearStyle() {
             // 500ms回弹
             setTimeout(function() {
+                that.$content[0].style[Util.prefixStyle('transform')] = '';
                 that.$content[0].style[Util.prefixStyle('transition')] = '';
                 that.$pullToRefresh[0].style[Util.prefixStyle('transition')] = '';
             }, 500);
