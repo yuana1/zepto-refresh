@@ -6,15 +6,16 @@
  * @license ISC
  */
 
-;(function (factory) {
+;
+(function(factory) {
     if (typeof define === "function" && define.amd) {
         // AMD模式
-        define([ "Zepto" ], factory);
+        define(["Zepto"], factory);
     } else {
         // 全局模式
         factory(Zepto);
     }
-}(function ($) {
+}(function($) {
     "use strict";
 
     /**
@@ -30,10 +31,10 @@
                 i = 0,
                 l = vendors.length;
 
-            for ( ; i < l; i++ ) {
+            for (; i < l; i++) {
                 transform = vendors[i] + 'ransform';
-                if ( transform in Util.elementStyle ) {
-                    return vendors[i].substr(0, vendors[i].length-1);
+                if (transform in Util.elementStyle) {
+                    return vendors[i].substr(0, vendors[i].length - 1);
                 }
             }
 
@@ -41,25 +42,25 @@
         },
         // 判断浏览器来适配css属性值
         prefixStyle: function(style) {
-            if ( Util.vendor() === false ) return false;
-            if ( Util.vendor() === '' ) return style;
+            if (Util.vendor() === false) return false;
+            if (Util.vendor() === '') return style;
 
             return Util.vendor() + style.charAt(0).toUpperCase() + style.substr(1);
         },
         // 判断是否支持css transform-3d（需要测试下面属性支持）
-        hasPerspective: function(){
+        hasPerspective: function() {
             var ret = Util.prefixStyle('perspective') in Util.elementStyle;
-            if ( ret && 'webkitPerspective' in Util.elementStyle ) {
-                Util.injectStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function( node, rule ) {
+            if (ret && 'webkitPerspective' in Util.elementStyle) {
+                Util.injectStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function(node, rule) {
                     ret = node.offsetLeft === 9 && node.offsetHeight === 3;
                 });
             }
             return !!ret;
         },
-        translateZ: function(){
-            if(Util.hasPerspective){
+        translateZ: function() {
+            if (Util.hasPerspective) {
                 return ' translateZ(0)';
-            }else{
+            } else {
                 return '';
             }
         }
@@ -70,19 +71,19 @@
         // 内容ID
         contentEl: '#J_content',
         // 默认开启刷新
-        isRefresh              : true,
+        isRefresh: true,
         // 默认开启加载更多
-        isLoadingMore          : true,
+        isLoadingMore: true,
         // 触摸移动的方向
-        movePosition           : null,
+        movePosition: null,
         // 下拉可刷新高度
-        distanceToRefresh      : 100,
+        distanceToRefresh: 100,
         // 下拉最小阈值
-        minDistanceToRefresh   : 100,
+        minDistanceToRefresh: 100,
         // 下拉最大阈值
-        maxDistanceToRefresh   : 200,
+        maxDistanceToRefresh: 200,
         // 更新限制时间, 默认不限制
-        interval               : 5,
+        interval: 5,
         // 刷新回调
         refreshCallback: function() {
 
@@ -96,7 +97,7 @@
     var viewHeight = $(window).height();
 
 
-    function Refresh( $this, options ) {
+    function Refresh($this, options) {
 
         this.$wrap = $this;
 
@@ -121,7 +122,7 @@
     /**
      * 初始化
      */
-    Refresh.prototype.init = function(){
+    Refresh.prototype.init = function() {
         this.loadingRender();
 
         this.bind();
@@ -131,22 +132,23 @@
     /**
      * loading加载
      */
-    Refresh.prototype.loadingRender = function(){
+    Refresh.prototype.loadingRender = function() {
         var that = this;
 
+        var top = this.$content.offset().top - 50;
         var refreshTpl = [
             '<style>',
-            '.preloader-refresh {position: absolute;top: -50px;left: 0;right: 0;width: 100%;text-align: center;padding: 5px 0;}',
-            '.preloader-refresh .icon-refresh {display: inline-block;width: 40px;height: 40px; background: url(images/pull-icon@2x.png) no-repeat 0 0;background-size: 40px 80px;-webkit-transition-property:-webkit-transform;-webkit-transition-duration:250ms;-webkit-transform:rotate(0deg) translateZ(0);}',
-            '.preloader-refresh-flip .icon-refresh {-webkit-transform:rotate(-180deg) translateZ(0);}',
+            '.preloader-refresh {position: absolute;top: ' + top + 'px;left: 0;right: 0;width: 100%;text-align: center;padding: 5px 0;}',
+            '.preloader-refresh .icon-refresh {display:inline-block;width: 40px;height: 40px; background: url(images/pull-icon@2x.png) no-repeat 0 0;background-size: 40px 80px;-webkit-transition-property:-webkit-transform;-webkit-transition-duration:250ms;-webkit-transform:rotate(0deg) translateZ(0);}',
+            '.preloader-refresh-flip .icon-refresh {display:inline-block;-webkit-transform:rotate(-180deg) translateZ(0);}',
             '.preloader-refresh-loading .icon-refresh {background-position:0 100%;-webkit-transform:rotate(0deg) translateZ(0);-webkit-transition-duration:0ms;-webkit-animation-name:refreshLoading;-webkit-animation-duration:2s;-webkit-animation-iteration-count:infinite;-webkit-animation-timing-function:linear;}',
             '@-webkit-keyframes refreshLoading {',
-                'from { -webkit-transform:rotate(0deg) translateZ(0); }',
-                'to { -webkit-transform:rotate(360deg) translateZ(0); }',
+            'from { -webkit-transform:rotate(0deg) translateZ(0); }',
+            'to { -webkit-transform:rotate(360deg) translateZ(0); }',
             '}',
             '</style>',
             '<div class="preloader-refresh">',
-                '<i class="icon-refresh"></i>',
+            '<i class="icon-refresh"></i>',
             '</div>'
         ].join('');
 
@@ -159,35 +161,36 @@
             '.preloader-loading-more:before {-webkit-animation-delay: -0.32s;animation-delay: -0.32s;}',
             '.preloader-loading-more .loading-bounce {-webkit-animation-delay: -0.16s;animation-delay: -0.16s;}',
             '@-webkit-keyframes bouncedelay {',
-                '0%, 80%, 100% { -webkit-transform: scale(0.0) }',
-                '40% { -webkit-transform: scale(1.0) }',
+            '0%, 80%, 100% { -webkit-transform: scale(0.0) }',
+            '40% { -webkit-transform: scale(1.0) }',
             '}',
             '@keyframes bouncedelay {',
-                '0%, 80%, 100% {',
-                    'transform: scale(0.0);',
-                '} 40% {',
-                    'transform: scale(1.0);',
-                '}',
+            '0%, 80%, 100% {',
+            'transform: scale(0.0);',
+            '} 40% {',
+            'transform: scale(1.0);',
+            '}',
             '}',
             '</style>',
             '<div class="preloader-loading-more">',
-                '<span class="loading-bounce"></span>',
+            '<span class="loading-bounce"></span>',
             '</div>'
         ].join('');
 
         // 刷新模板
-        if(this.opts.isRefresh) {
-            this.$content.before( refreshTpl );
+        if (this.opts.isRefresh) {
+            this.$content.before(refreshTpl);
+            $('.preloader-refresh .icon-refresh').css('display', 'none');
             this.$pullToRefresh = $('.preloader-refresh');
             this.refreshHeight = this.$pullToRefresh.height();
         }
 
         // 加载更多模板
-        if(this.opts.isLoadingMore) {
-            this.$content.after( moveTpl );
+        if (this.opts.isLoadingMore) {
+            this.$content.after(moveTpl);
             this.$loadingMore = $('.preloader-loading-more');
 
-            if(this.wrapHeight < viewHeight){
+            if (this.wrapHeight < viewHeight) {
                 this.$loadingMore.hide();
             }
         }
@@ -200,7 +203,7 @@
         var that = this;
 
         // 未开启刷新不添加事件
-        if(this.opts.isRefresh) {
+        if (this.opts.isRefresh) {
             this.$wrap
                 .off('touchstart')
                 .on('touchstart', function(e) {
@@ -247,8 +250,11 @@
             return;
         }
 
+        $('.preloader-refresh .icon-refresh').css('display', 'inline-block');
+
         var currentX = e.touches[0].pageX - this.startX,
             currentY = e.touches[0].pageY - this.startY;
+        // console.log(e.touches[0].pageY + ' ' + this.startY);
 
         // 如果横向滚动大于纵向滚动. 取消触发事件
         if (Math.abs(currentX) > Math.abs(currentY)) {
@@ -261,23 +267,23 @@
         // 设置移动方向
         if (currentY > 0) {
             this.opts.movePosition = 'down';
-        }else {
+        } else {
             this.opts.movePosition = 'up';
         }
 
         // distance在区间内按正弦分布
         var distance = currentY;
-            distance = distance < this.opts.maxDistanceToRefresh ? distance : this.opts.maxDistanceToRefresh;
-            distance = Math.sin(distance/this.opts.maxDistanceToRefresh) * distance;
+        distance = distance < this.opts.maxDistanceToRefresh ? distance : this.opts.maxDistanceToRefresh;
+        distance = Math.sin(distance / this.opts.maxDistanceToRefresh) * distance;
 
 
         // 当前处于首屏，设置distanceToRefresh坐标 && 向下滑动刷新
-        if ( this.scrollTop <= this.opts.distanceToRefresh && this.opts.movePosition === 'down'  ) {
+        if (this.scrollTop <= this.opts.distanceToRefresh && this.opts.movePosition === 'down') {
 
-            if(currentY >= this.opts.minDistanceToRefresh){
+            if (currentY >= this.opts.minDistanceToRefresh) {
                 this.$pullToRefresh.addClass('preloader-refresh-flip');
                 this.isPullToRefresh = true;
-            }else{
+            } else {
                 this.$pullToRefresh.removeClass('preloader-refresh-flip');
                 this.isPullToRefresh = false;
             }
@@ -300,8 +306,8 @@
         var that = this;
 
         //当且进当下拉刷新的时候触发 content的transform
-        if(!( this.scrollTop <= this.opts.distanceToRefresh && this.opts.movePosition === 'down'  )){
-            return ;
+        if (!(this.scrollTop <= this.opts.distanceToRefresh && this.opts.movePosition === 'down')) {
+            return;
         }
         /**
          * 回调执行完，回调
@@ -316,7 +322,7 @@
             that.$pullToRefresh[0].style[Util.prefixStyle('transform')] = 'translate(0, 0)' + Util.translateZ();
 
             // 下拉加载到最后一页，异步刷新重新开始scroll事件
-            if(that.finished){
+            if (that.finished) {
                 that.finished = false;
                 that.reBindScroll();
             }
@@ -331,6 +337,7 @@
                 that.$content[0].style[Util.prefixStyle('transform')] = '';
                 that.$content[0].style[Util.prefixStyle('transition')] = '';
                 that.$pullToRefresh[0].style[Util.prefixStyle('transition')] = '';
+                $('.preloader-refresh .icon-refresh').css('display', 'none');
             }, 500);
         };
 
@@ -339,7 +346,7 @@
         // 如果存在最大时间限制, 切刷新时间未超出该时间，则不刷新
         var now = new Date().getTime();
 
-        if(this.opts.interval && now - this.loadingFinishTime < this.opts.interval){
+        if (this.opts.interval && now - this.loadingFinishTime < this.opts.interval) {
             complete();
             return;
         }
@@ -377,7 +384,7 @@
     Refresh.prototype.getLoadMore = function() {
         var that = this;
 
-        if(this.finished){
+        if (this.finished) {
             return;
         }
 
@@ -389,7 +396,7 @@
          * 回调执行完，回调
          */
         function complete(status) {
-            if("finish" == status){
+            if ("finish" == status) {
                 that.finished = true;
                 that.$loadingMore.hide();
                 that.$wrap.off("scroll.refresh");
@@ -400,10 +407,10 @@
 
         //重新设置content高度 可能会引起性能问题
         this.wrapHeight = this.$content.height();
-        if ( this.wrapHeight <= viewTop + 10  && this.oldScrollTop < scrollTop && !this.isLoading && this.opts.isLoadingMore ) {
+        if (this.wrapHeight <= viewTop + 10 && this.oldScrollTop < scrollTop && !this.isLoading && this.opts.isLoadingMore) {
             // 如果存在最大时间限制, 切刷新时间未超出该时间，则不刷新
             var now = new Date().getTime();
-            if(this.opts.interval && now - this.loadingFinishTime < this.opts.interval){
+            if (this.opts.interval && now - this.loadingFinishTime < this.opts.interval) {
                 return;
             }
             this.loadingFinishTime = now;
@@ -419,12 +426,13 @@
 
     };
 
-    $.fn.refresh = function( options, callback ) {
+    $.fn.refresh = function(options, callback) {
         return this.each(function() {
-            new Refresh( $(this), options );
+            new Refresh($(this), options);
         })
     };
 
     // ADM
     return Refresh;
 }));
+
